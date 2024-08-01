@@ -4,31 +4,24 @@
   import { axiosGet } from '$lib/utils.ts/axiosInstance';
 
   let items: any[] = [];
-  const getManga = async () => {
-    const data = await axiosGet('manga');
-    console.log('🚀 ~ getManga ~ data:', data);
+  const getAnime = async () => {
+    const data = await axiosGet('genres/anime');
+    console.log('🚀 ~ getAnime ~ data:', data);
     items = data.data.data;
     console.log(items);
   };
 
   onMount(() => {
-    getManga();
+    getAnime();
   });
 </script>
 
 <svelte:head>
-  <title>Manga</title>
+  <title>Genre</title>
   <meta name="description" content="A Wordle clone written in SvelteKit" />
 </svelte:head>
 
-{#each items as item}
-  <section>
-    <Item
-      id={item.mal_id}
-      image={item.images.jpg.image_url}
-      title={item.title}
-      score={item.score}
-      genres={item.genres}
-    />
-  </section>
-{/each}
+<ul>
+  <li><a href="/genre/BL">blue love</a></li>
+  <li><a href="genre/rom">romantic</a></li>
+</ul>
