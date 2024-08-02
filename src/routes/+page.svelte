@@ -6,17 +6,19 @@
   let items: any[] = [];
   const getTopAnime = async () => {
     const data = await axiosGet('top/anime');
-    console.log('🚀 ~ getTopAnime ~ data:', data);
+    /* console.log('🚀 ~ getTopAnime ~ data:', data); */
     items = data.data.data;
-    console.log(items);
+    items = items.slice(0, 5);
+    /* console.log(items); */
   };
 
   let manga: any[] = [];
   const getTopManga = async () => {
     const data = await axiosGet('top/manga');
-    console.log('🚀 ~ getTopManga ~ data:', data);
+    /* console.log('🚀 ~ getTopManga ~ data:', data); */
     manga = data.data.data;
-    console.log(manga);
+    manga = manga.slice(0, 5);
+    /*  console.log(manga); */
   };
 
   onMount(() => {
@@ -30,11 +32,12 @@
   <meta name="description" content="Svelte demo app" />
 </svelte:head>
 
-<div>
-  <h2>Top Anime</h2>
+<h1>Top Anime</h1>
+<div class="top_anime">
   {#each items as item}
     <section>
       <Item
+        path="anime"
         id={item.mal_id}
         image={item.images.jpg.image_url}
         title={item.title}
@@ -45,11 +48,12 @@
   {/each}
 </div>
 
-<div>
-  <h2>Top Manga</h2>
+<h1>Top Manga</h1>
+<div class="top_manga">
   {#each manga as mang}
     <section>
       <Item
+        path="manga"
         id={mang.mal_id}
         image={mang.images.jpg.image_url}
         title={mang.title}
@@ -61,31 +65,15 @@
 </div>
 
 <style>
-  section {
+  .top_manga,
+  .top_anime {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex: 0.6;
+    flex-direction: row;
+    justify-content: space-around;
+    /* flex-wrap: wrap; */
   }
 
-  h1 {
-    width: 100%;
-  }
-
-  .welcome {
-    display: block;
-    position: relative;
-    width: 100%;
-    height: 0;
-    padding: 0 0 calc(100% * 495 / 2048) 0;
-  }
-
-  .welcome img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    display: block;
+  h2 {
+    font-size: 50px;
   }
 </style>

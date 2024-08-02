@@ -12,13 +12,13 @@
 </div>
 
 <style>
-  .app {
+  /* .app {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-  }
+  } */
 
-  main {
+  /*   main {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -27,15 +27,15 @@
     max-width: 64rem;
     margin: 0 auto;
     box-sizing: border-box;
-  }
+  } */
 
-  footer {
+  /*   footer {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 12px;
-  }
+  } */
 
   footer a {
     font-weight: bold;

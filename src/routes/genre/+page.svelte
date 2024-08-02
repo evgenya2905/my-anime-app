@@ -1,18 +1,27 @@
 <script lang="ts">
-  import Item from '$lib/componets/Item.svelte';
+  import Genre from '$lib/componets/Genre.svelte';
   import { onMount } from 'svelte';
   import { axiosGet } from '$lib/utils.ts/axiosInstance';
 
-  let items: any[] = [];
-  const getAnime = async () => {
+  let genresAnime: any[] = [];
+  const getAnimeGenre = async () => {
     const data = await axiosGet('genres/anime');
-    console.log('🚀 ~ getAnime ~ data:', data);
-    items = data.data.data;
-    console.log(items);
+    /* console.log('🚀 ~ getAnimeGenre ~ data:', data); */
+    genresAnime = data.data.data;
+    /* console.log(genresAnime); */
+  };
+
+  let genresManga: any[] = [];
+  const getMangaGenre = async () => {
+    const data = await axiosGet('genres/manga');
+    /* console.log('🚀 ~ getMangaGenre ~ data:', data); */
+    genresManga = data.data.data;
+    /* console.log(genresManga); */
   };
 
   onMount(() => {
-    getAnime();
+    getAnimeGenre();
+    getMangaGenre();
   });
 </script>
 
@@ -21,7 +30,24 @@
   <meta name="description" content="A Wordle clone written in SvelteKit" />
 </svelte:head>
 
-<ul>
-  <li><a href="/genre/BL">blue love</a></li>
-  <li><a href="genre/rom">romantic</a></li>
-</ul>
+<div class="main">
+  <div>
+    {#each genresAnime as genre}
+      <Genre path="anime" {genre} />
+    {/each}
+  </div>
+
+  <div>
+    {#each genresManga as genre}
+      <Genre path="manga" {genre} />
+    {/each}
+  </div>
+</div>
+
+<style>
+  .main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+</style>

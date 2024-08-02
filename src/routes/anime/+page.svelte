@@ -6,9 +6,9 @@
   let items: any[] = [];
   const getAnime = async () => {
     const data = await axiosGet('anime');
-    console.log('🚀 ~ getAnime ~ data:', data);
+    /* console.log('🚀 ~ getAnime ~ data:', data); */
     items = data.data.data;
-    console.log(items);
+    /* console.log(items); */
   };
 
   onMount(() => {
@@ -21,8 +21,9 @@
   <meta name="page_anime" content="List of anime" />
 </svelte:head>
 
-{#each items as item}
-  <section>
+<div>
+  {#each items as item}
+    <!-- <section> -->
     <Item
       id={item.mal_id}
       image={item.images.jpg.image_url}
@@ -30,5 +31,17 @@
       score={item.score}
       genres={item.genres}
     />
-  </section>
-{/each}
+    <!-- </section> -->
+  {/each}
+</div>
+
+<style>
+  div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 40px;
+    flex-wrap: wrap;
+    padding: 20px;
+  }
+</style>

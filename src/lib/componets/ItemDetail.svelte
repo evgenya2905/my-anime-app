@@ -1,19 +1,39 @@
 <script lang="ts">
   export let title = 'Default Title';
-  /* export let genres: any[]; */
+  export let genres: any[] = [];
   export let score = 'Default score';
-  /* export let image: any; */
+  export let image = '';
   export let synopsis = 'Default synopsis';
-  /* let link = window.location.href.split('/');
-  let path = link[link.length - 1]; */
 </script>
 
-<div>
-  <h1>{title}</h1>
-  <!-- <img src={image} alt={title} /> -->
-  <p>{score}</p>
-  <!-- {#each genres as genre}
-    <div>{genre.name}</div>
-  {/each} -->
-  <p>{synopsis}</p>
+<div class="main">
+  <img src={image} alt={title} />
+  <div class="about_title">
+    <h2>{title}</h2>
+    <p>{score}</p>
+    {#each genres as genre}
+      <div>{genre.name}</div>
+    {/each}
+    <p class="synopsis">{synopsis}</p>
+  </div>
 </div>
+
+<style>
+  .main {
+    display: flex;
+    flex-direction: row;
+  }
+
+  img {
+    max-width: 500px;
+  }
+
+  .about_title {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .synopsis {
+    max-width: 50%;
+  }
+</style>
