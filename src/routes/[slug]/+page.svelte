@@ -49,18 +49,18 @@
   });
 </script>
 
-<ItemDetail
+<!-- <ItemDetail
   title={itemAnime.title}
   image={itemAnime.images.jpg.large_image_url}
   genres={itemAnime.genres}
   score={itemAnime.score}
   synopsis={itemAnime.synopsis}
-/>
+/> -->
 
-<ItemDetail
+<!-- <ItemDetail
   title={itemManga.title}
   image={itemManga.images.jpg.large_image_url}
   genres={itemManga.genres}
   score={itemManga.score}
   synopsis={itemManga.synopsis}
-/>
+/> -->

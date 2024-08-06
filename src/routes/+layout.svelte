@@ -37,7 +37,7 @@
     padding: 12px;
   } */
 
-  footer a {
+  /*  footer a {
     font-weight: bold;
   }
 
@@ -45,5 +45,5 @@
     footer {
       padding: 12px 0;
     }
-  }
+  } */
 </style>

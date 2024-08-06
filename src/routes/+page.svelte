@@ -2,6 +2,9 @@
   import Item from '$lib/componets/Item.svelte';
   import { onMount } from 'svelte';
   import { axiosGet } from '$lib/utils.ts/axiosInstance';
+  import SkeletonImg from '$lib/componets/SkeletonImg.svelte';
+
+  let loading = true;
 
   let items: any[] = [];
   const getTopAnime = async () => {
@@ -9,21 +12,24 @@
     /* console.log('🚀 ~ getTopAnime ~ data:', data); */
     items = data.data.data;
     items = items.slice(0, 5);
-    /* console.log(items); */
+    console.log(items);
   };
 
   let manga: any[] = [];
   const getTopManga = async () => {
     const data = await axiosGet('top/manga');
+    //PAGINATION
+    //'top/manga/?page=1&limit=5'
+    //manga/genres=action,hentai
     /* console.log('🚀 ~ getTopManga ~ data:', data); */
     manga = data.data.data;
     manga = manga.slice(0, 5);
     /*  console.log(manga); */
   };
 
-  onMount(() => {
-    getTopAnime();
-    getTopManga();
+  onMount(async () => {
+    await Promise.all([getTopAnime(), getTopManga()]);
+    loading = false;
   });
 </script>
 
@@ -33,36 +39,54 @@
 </svelte:head>
 
 <h1>Top Anime</h1>
-<div class="top_anime">
-  {#each items as item}
-    <section>
-      <Item
-        path="anime"
-        id={item.mal_id}
-        image={item.images.jpg.image_url}
-        title={item.title}
-        score={item.score}
-        genres={item.genres}
-      />
-    </section>
-  {/each}
-</div>
+{#if loading}
+  <div class="top_anime">
+    {#each Array(5) as _, i (i)}
+      <SkeletonImg />
+    {/each}
+  </div>
+{:else}
+  <div class="top_anime">
+    {#each items as item (item.mal_id)}
+      <section>
+        <Item
+          path="anime"
+          id={item.mal_id}
+          image={item.images.jpg.image_url}
+          title={item.title}
+          titleJapanese={item.title_japanese}
+          score={item.score}
+          genres={item.genres}
+        />
+      </section>
+    {/each}
+  </div>
+{/if}
 
 <h1>Top Manga</h1>
-<div class="top_manga">
-  {#each manga as mang}
-    <section>
-      <Item
-        path="manga"
-        id={mang.mal_id}
-        image={mang.images.jpg.image_url}
-        title={mang.title}
-        score={mang.score}
-        genres={mang.genres}
-      />
-    </section>
-  {/each}
-</div>
+{#if loading}
+  <div class="top_manga">
+    {#each Array(5) as _, i (i)}
+      <SkeletonImg />
+    {/each}
+  </div>
+{:else}
+  <div class="top_manga">
+    {#each manga as mang (mang.mal_id)}
+      <section>
+        <Item
+          path="manga"
+          id={mang.mal_id}
+          image={mang.images.jpg.image_url}
+          title={mang.title}
+          titleJapanese={mang.title_japanese}
+          score={mang.score}
+          genres={mang.genres}
+        />
+      </section>
+    {/each}
+  </div>
+{/if}
 
 <style>
   .top_manga,

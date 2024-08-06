@@ -4,6 +4,9 @@
   import ItemDetail from '$lib/componets/ItemDetail.svelte';
   import { page } from '$app/stores';
   /*  console.log('🚀 ~ page:', $page.params.slug); */
+  import Loader from '$lib/componets/Loader.svelte';
+
+  let loading = true;
 
   let item: { [key: string]: any } = {
     title: 'Loading...',
@@ -24,15 +27,28 @@
     /* console.log(item); */
   };
 
-  onMount(() => {
-    getAnime();
+  onMount(async () => {
+    await getAnime();
+    loading = false;
   });
 </script>
 
-<ItemDetail
-  title={item.title}
-  image={item.images.jpg.large_image_url}
-  genres={item.genres}
-  score={item.score}
-  synopsis={item.synopsis}
-/>
+{#if loading}
+  <div><Loader /></div>
+{:else}
+  <ItemDetail
+    title={item.title}
+    titleJapanese={item.title_japanese}
+    image={item.images.jpg.large_image_url}
+    genres={item.genres}
+    score={item.score}
+    synopsis={item.synopsis}
+  />
+{/if}
+
+<style>
+  div {
+    text-align: center;
+    margin: 200px;
+  }
+</style>
