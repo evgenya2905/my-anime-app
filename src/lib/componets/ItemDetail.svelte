@@ -1,12 +1,28 @@
 <script lang="ts">
-  //types
-  export let title = 'Default Title';
-  export let titleJapanese = 'Default Title';
+  import { page } from '$app/stores';
+  import { goto } from '$app/navigation';
+
+  export let title: string;
+  export let titleJapanese: string;
   export let genres: any[] = [];
-  export let score = 'Default score';
-  export let image = '';
-  export let synopsis = 'Default synopsis';
-  let imageLoaded = false;
+  export let score: string;
+  export let image: string;
+  export let synopsis: string;
+
+  let imageLoaded: boolean = false;
+
+  let link: any = $page.route.id;
+  /* console.log(link); */
+
+  let array: any[] = link.split('/');
+  /* console.log(array); */
+
+  let path: string = array[1];
+  /* console.log(path); */
+
+  function handleClick(num: number): void {
+    goto(`/genre/${path}/${num}`);
+  }
 </script>
 
 <div class="main">
@@ -23,9 +39,11 @@
       <p>{score}</p>
     </div>
     <div class="genre_synopsis">
-      <div>
+      <div class="genres_list">
         {#each genres as genre}
-          <div class="genre">{genre.name}</div>
+          <button on:click={() => handleClick(genre.mal_id)} class="genre">
+            {genre.name}
+          </button>
         {/each}
       </div>
       <p class="synopsis">{synopsis}</p>
@@ -68,6 +86,12 @@
     margin: 0;
   }
 
+  .genres_list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
   .genre_synopsis {
     display: flex;
     flex-direction: column;
@@ -83,5 +107,10 @@
     border: 0.05em solid rgb(96, 96, 164);
     border-radius: 30px;
     background-color: rgb(199, 199, 219);
+  }
+
+  .genre:hover {
+    cursor: pointer;
+    background-color: rgb(170, 170, 219);
   }
 </style>

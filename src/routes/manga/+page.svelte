@@ -50,7 +50,6 @@
         titleJapanese={item.title_japanese}
         title={item.title}
         score={item.score}
-        genres={item.genres}
       />
     {/each}
   </div>

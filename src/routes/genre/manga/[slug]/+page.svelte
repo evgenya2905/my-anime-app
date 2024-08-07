@@ -1,28 +1,32 @@
 <script lang="ts">
+  import { page } from '$app/stores';
+  /* console.log('🚀 ~ page:', $page.params.slug); */
+  import { onMount } from 'svelte';
+  import { axiosGet } from '$lib/utils.ts/axiosInstance';
   import Item from '$lib/componets/Item.svelte';
   import SkeletonImg from '$lib/componets/SkeletonImg.svelte';
   import Pagination from '$lib/componets/Pagination.svelte';
-  import { onMount } from 'svelte';
-  import { axiosGet } from '$lib/utils.ts/axiosInstance';
+
+  let slug = $page.params.slug;
 
   let loading = true;
   let currentPage = 1;
   let totalPages = 1;
 
   let items: any[] = [];
-  const getAnime = async (page: number) => {
-    const response = await axiosGet(`anime?page=${page}`);
+  const getManga = async (page: number) => {
+    const response = await axiosGet(`manga?genres=${slug}&page=${page}`);
     const data = response.data;
     items = data.data;
-    console.log(items);
-    totalPages = data.pagination.last_visible_page - 5;
-    /* console.log(data.pagination); */
+    console.log(data);
+    totalPages = data.pagination.last_visible_page;
+    /*  console.log(data.pagination); */
   };
 
   const loadPage = async (page: number) => {
     loading = true;
     currentPage = page;
-    await getAnime(page);
+    await getManga(page);
     loading = false;
   };
 
@@ -46,6 +50,7 @@
   <div>
     {#each items as item (item.mal_id)}
       <Item
+        path="manga"
         id={item.mal_id}
         image={item.images.jpg.image_url}
         title={item.title}

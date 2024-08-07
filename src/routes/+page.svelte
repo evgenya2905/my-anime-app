@@ -4,26 +4,21 @@
   import { axiosGet } from '$lib/utils.ts/axiosInstance';
   import SkeletonImg from '$lib/componets/SkeletonImg.svelte';
 
-  let loading = true;
+  let loading: boolean = true;
 
   let items: any[] = [];
   const getTopAnime = async () => {
-    const data = await axiosGet('top/anime');
+    const data = await axiosGet('top/anime?page=1&limit=5');
     /* console.log('🚀 ~ getTopAnime ~ data:', data); */
     items = data.data.data;
-    items = items.slice(0, 5);
     console.log(items);
   };
 
   let manga: any[] = [];
   const getTopManga = async () => {
-    const data = await axiosGet('top/manga');
-    //PAGINATION
-    //'top/manga/?page=1&limit=5'
-    //manga/genres=action,hentai
+    const data = await axiosGet('top/manga?page=1&limit=5');
     /* console.log('🚀 ~ getTopManga ~ data:', data); */
     manga = data.data.data;
-    manga = manga.slice(0, 5);
     /*  console.log(manga); */
   };
 
@@ -56,7 +51,6 @@
           title={item.title}
           titleJapanese={item.title_japanese}
           score={item.score}
-          genres={item.genres}
         />
       </section>
     {/each}
@@ -81,7 +75,6 @@
           title={mang.title}
           titleJapanese={mang.title_japanese}
           score={mang.score}
-          genres={mang.genres}
         />
       </section>
     {/each}
@@ -89,15 +82,21 @@
 {/if}
 
 <style>
+  body {
+  }
+
   .top_manga,
   .top_anime {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    /* flex-wrap: wrap; */
   }
 
   h2 {
     font-size: 50px;
+  }
+
+  .top_manga {
+    margin-bottom: 50px;
   }
 </style>
