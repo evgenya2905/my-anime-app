@@ -1,18 +1,40 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { axiosGet } from '$lib/utils.ts/axiosInstance';
-  import ItemDetail from '$lib/componets/ItemDetail.svelte';
+  import ItemDetail from '$lib/components/ItemDetail.svelte';
   import { page } from '$app/stores';
   /* console.log('🚀 ~ page:', $page.params.slug); */
 
-  import Loader from '$lib/componets/Loader.svelte';
+  import Loader from '$lib/components/Loader.svelte';
 
-  let loading = true;
+  let loading: boolean = true;
 
-  let item: { [key: string]: any } = {
+  interface Images {
+    jpg: {
+      large_image_url: string;
+    };
+  }
+
+  interface Authors {
+    name: string;
+  }
+
+  interface Item {
+    title: string;
+    title_japanese: string;
+    authors: Authors[];
+    genres: string[];
+    score: number | null;
+    images: Images;
+    synopsis: string;
+  }
+
+  let item: Item = {
     title: 'Loading...',
+    title_japanese: 'Loading...',
+    authors: [],
     genres: [],
-    score: 'Loading...',
+    score: 0,
     images: {
       jpg: {
         large_image_url: '',
@@ -25,7 +47,7 @@
     const data = await axiosGet(`manga/${$page.params.slug}`);
     /* console.log('🚀 ~ getManga ~ data:', data); */
     item = data.data.data;
-    /*   console.log(item); */
+    console.log(item);
   };
 
   onMount(async () => {
@@ -40,6 +62,7 @@
   <ItemDetail
     title={item.title}
     titleJapanese={item.title_japanese}
+    authors={item.authors}
     image={item.images.jpg.large_image_url}
     genres={item.genres}
     score={item.score}

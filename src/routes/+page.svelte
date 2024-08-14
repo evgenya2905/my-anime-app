@@ -1,20 +1,32 @@
 <script lang="ts">
-  import Item from '$lib/componets/Item.svelte';
+  import Item from '$lib/components/Item.svelte';
   import { onMount } from 'svelte';
   import { axiosGet } from '$lib/utils.ts/axiosInstance';
-  import SkeletonImg from '$lib/componets/SkeletonImg.svelte';
+  import SkeletonImg from '$lib/components/SkeletonImg.svelte';
 
   let loading: boolean = true;
 
-  let items: any[] = [];
+  interface Item {
+    mal_id: number;
+    images: {
+      jpg: {
+        image_url: string;
+      };
+    };
+    title: string;
+    title_japanese: string;
+    score: number | null;
+  }
+
+  let items: Item[] = [];
   const getTopAnime = async () => {
     const data = await axiosGet('top/anime?page=1&limit=5');
     /* console.log('🚀 ~ getTopAnime ~ data:', data); */
     items = data.data.data;
-    console.log(items);
+    /*  console.log(items); */
   };
 
-  let manga: any[] = [];
+  let manga: Item[] = [];
   const getTopManga = async () => {
     const data = await axiosGet('top/manga?page=1&limit=5');
     /* console.log('🚀 ~ getTopManga ~ data:', data); */

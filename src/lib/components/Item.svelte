@@ -6,7 +6,7 @@
   export let title: string;
   export let titleJapanese: string;
   /* export let genres: any[]; */
-  export let score: string;
+  export let score: number | null = null;
   export let image: string;
   export let id: number;
   let imageLoaded: boolean = false;
@@ -46,14 +46,9 @@
   <h2>{title}</h2>
   <h2>{titleJapanese}</h2>
 
-  <p>{score}</p>
-  <!-- <div class="genres_list">
-    {#each genres as genre}
-      <div class="genre">
-        {genre.name}
-      </div>
-    {/each}
-  </div> -->
+  {#if score !== null}
+    <p>{score}</p>
+  {/if}
 </div>
 
 <style>
@@ -73,6 +68,7 @@
   .main:hover {
     cursor: pointer;
     background-color: rgb(205, 205, 242);
+    transition: 0.1s ease-in;
   }
 
   /*  .genres_list {
@@ -90,6 +86,7 @@
 
   img {
     /* min-width: 210px; */
+    object-fit: cover;
     min-height: 310px;
     max-width: 225px;
     max-height: 310px;
@@ -111,6 +108,7 @@
     width: 225px;
     display: inline-block;
     text-overflow: ellipsis;
+    height: 1.5em;
   }
 
   p {

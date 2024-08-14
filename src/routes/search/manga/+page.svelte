@@ -1,14 +1,18 @@
 <script lang="ts">
-  import { page } from '$app/stores';
-  /* console.log('🚀 ~ page:', $page.params.slug); */
-  import { onMount } from 'svelte';
-  import { axiosGet } from '$lib/utils.ts/axiosInstance';
   import Item from '$lib/components/Item.svelte';
   import SkeletonImg from '$lib/components/SkeletonImg.svelte';
   import Pagination from '$lib/components/Pagination.svelte';
-
-  let slug: string = $page.params.slug;
-  /* console.log(slug); */
+  import { onMount } from 'svelte';
+  import { axiosGet } from '$lib/utils.ts/axiosInstance';
+  import { sharedName } from '$lib/store';
+  import { goto } from '$app/navigation';
+  let currentName: string;
+  $: $sharedName, (currentName = $sharedName);
+  $: {
+    if (currentName) {
+      loadPage(1); // Завантажити першу сторінку при зміні пошукового запиту
+    }
+  }
 
   let loading: boolean = true;
   let currentPage: number = 1;
@@ -28,12 +32,14 @@
 
   let items: Item[] = [];
   const getManga = async (page: number) => {
-    const response = await axiosGet(`manga?genres=${slug}&page=${page}`);
+    const response = await axiosGet(`manga?page=${page}&q=${currentName}`);
     const data = response.data;
     items = data.data;
-    /*   console.log(data); */
+    if (items.length === 0) {
+      goto(`/search/notfound`);
+    }
     totalPages = data.pagination.last_visible_page;
-    /*  console.log(data.pagination); */
+    console.log(currentName);
   };
 
   const loadPage = async (page: number) => {
@@ -49,8 +55,8 @@
 </script>
 
 <svelte:head>
-  <title>Anime</title>
-  <meta name="page_anime" content="List of anime" />
+  <title>Manga</title>
+  <meta name="description" content="A Wordle clone written in SvelteKit" />
 </svelte:head>
 
 {#if loading}
@@ -63,11 +69,10 @@
   <div>
     {#each items as item, index (`${item.mal_id}-${index}`)}
       <Item
-        path="manga"
         id={item.mal_id}
         image={item.images.jpg.image_url}
-        title={item.title}
         titleJapanese={item.title_japanese}
+        title={item.title}
         score={item.score}
       />
     {/each}

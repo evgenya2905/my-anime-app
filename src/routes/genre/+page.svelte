@@ -1,42 +1,52 @@
 <script lang="ts">
-  import Genre from '$lib/componets/Genre.svelte';
+  import Genre from '$lib/components/Genre.svelte';
   import { onMount } from 'svelte';
   import { axiosGet } from '$lib/utils.ts/axiosInstance';
   import { page } from '$app/stores';
   import { fly } from 'svelte/transition';
-  import { fade } from 'svelte/transition';
+  import Loader from '$lib/components/Loader.svelte';
+  let loading: boolean = true;
 
-  console.log('🚀 ~ page:', $page.url.pathname);
+  /*  console.log('🚀 ~ page:', $page.url.pathname); */
 
   let showBlock: boolean = true;
+
   function toggleBlock() {
     showBlock = !showBlock;
   }
 
-  let genresAnime: any[] = [];
+  interface Genre {
+    mal_id: number;
+    name: string;
+    url: string;
+    count: number;
+  }
+
+  let genresAnime: Genre[] = [];
   const getAnimeGenre = async () => {
     const data = await axiosGet('genres/anime');
-    console.log('🚀 ~ getAnimeGenre ~ data:', data);
+    /* console.log('🚀 ~ getAnimeGenre ~ data:', data); */
     genresAnime = data.data.data;
-    console.log(genresAnime);
+    /*  console.log(genresAnime); */
   };
 
-  let genresManga: any[] = [];
+  let genresManga: Genre[] = [];
   const getMangaGenre = async () => {
     const data = await axiosGet('genres/manga');
     /* console.log('🚀 ~ getMangaGenre ~ data:', data); */
     genresManga = data.data.data;
-    console.log(genresManga);
+    /*  console.log(genresManga); */
   };
 
   onMount(() => {
     getAnimeGenre();
     getMangaGenre();
+    loading = false;
   });
 </script>
 
 <svelte:head>
-  <title>Genre</title>
+  <title>Genres</title>
   <meta name="description" content="A Wordle clone written in SvelteKit" />
 </svelte:head>
 
@@ -47,11 +57,15 @@
         <h2>Genres of anime</h2>
         <button on:click={toggleBlock}> Go to genres of manga &#9658;</button>
       </div>
-      <div class="genres_anime">
-        {#each genresAnime as genre}
-          <Genre path="anime" {genre} />
-        {/each}
-      </div>
+      {#if loading}
+        <div class="loader"><Loader /></div>
+      {:else}
+        <div class="genres_anime">
+          {#each genresAnime as genre}
+            <Genre path="anime" {genre} />
+          {/each}
+        </div>
+      {/if}
     </div>
   {:else}
     <div class="content" transition:fly={{ x: 1000, duration: 1000 }}>
@@ -69,6 +83,10 @@
 </div>
 
 <style>
+  .loader {
+    text-align: center;
+  }
+
   .main {
     width: 100%;
     height: 100vh;

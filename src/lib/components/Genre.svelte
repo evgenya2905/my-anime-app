@@ -1,5 +1,12 @@
 <script lang="ts">
-  export let genre: { [key: string]: any };
+  interface Genre {
+    mal_id: number;
+    name: string;
+    url: string;
+    count: number;
+  }
+
+  export let genre: Genre;
   export let path: string;
 </script>
 
@@ -23,5 +30,6 @@
 
   div:hover {
     background-color: rgb(147, 185, 220);
+    transition: 0.1s ease-in;
   }
 </style>

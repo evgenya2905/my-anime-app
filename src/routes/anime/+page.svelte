@@ -1,22 +1,36 @@
 <script lang="ts">
-  import Item from '$lib/componets/Item.svelte';
-  import SkeletonImg from '$lib/componets/SkeletonImg.svelte';
-  import Pagination from '$lib/componets/Pagination.svelte';
+  import Item from '$lib/components/Item.svelte';
+  import SkeletonImg from '$lib/components/SkeletonImg.svelte';
+  import Pagination from '$lib/components/Pagination.svelte';
   import { onMount } from 'svelte';
   import { axiosGet } from '$lib/utils.ts/axiosInstance';
+  import { sharedName } from '$lib/store';
+  let currentName: string;
+  $: $sharedName, (currentName = $sharedName);
 
-  let loading = true;
-  let currentPage = 1;
-  let totalPages = 1;
+  let loading: boolean = true;
+  let currentPage: number = 1;
+  let totalPages: number = 1;
 
-  let items: any[] = [];
+  interface Item {
+    mal_id: number;
+    images: {
+      jpg: {
+        image_url: string;
+      };
+    };
+    title: string;
+    title_japanese: string;
+    score: number | null;
+  }
+
+  let items: Item[] = [];
   const getAnime = async (page: number) => {
-    const response = await axiosGet(`anime?page=${page}`);
+    const response = await axiosGet(`top/anime?page=${page}`);
     const data = response.data;
     items = data.data;
-    console.log(items);
-    totalPages = data.pagination.last_visible_page - 5;
-    /* console.log(data.pagination); */
+    totalPages = data.pagination.last_visible_page;
+    console.log(currentName);
   };
 
   const loadPage = async (page: number) => {
@@ -44,7 +58,7 @@
   </div>
 {:else}
   <div>
-    {#each items as item (item.mal_id)}
+    {#each items as item, index (`${item.mal_id}-${index}`)}
       <Item
         id={item.mal_id}
         image={item.images.jpg.image_url}

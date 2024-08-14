@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { axiosGet } from '$lib/utils.ts/axiosInstance';
-  import ItemDetail from '$lib/componets/ItemDetail.svelte';
+  /* import ItemDetail from '$lib/components/ItemDetail.svelte'; */
   import { page } from '$app/stores';
   /*  console.log('🚀 ~ page:', $page.params.slug); */
 

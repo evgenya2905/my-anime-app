@@ -1,49 +1,38 @@
-<script>
+<script lang="ts">
   import Header from './Header.svelte';
   import '../app.css';
+
+  let isSearchOpen: boolean;
+
+  function handleSearchToggle(isOpen: boolean): void {
+    isSearchOpen = isOpen;
+  }
+
+  function handleMainClick(): void {
+    if (isSearchOpen) {
+      console.log('Closing search...');
+      handleSearchToggle(false);
+    }
+  }
 </script>
 
 <div class="app">
-  <Header />
+  <Header bind:showSearch={isSearchOpen} />
 
-  <main>
-    <slot />
+  <main on:click={handleMainClick} class={isSearchOpen ? 'blurred' : ''}>
+    <div class={isSearchOpen ? 'blurred' : ''}>
+      <slot />
+    </div>
   </main>
 </div>
 
 <style>
-  /* .app {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  } */
-
-  /*   main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    width: 100%;
-    max-width: 64rem;
-    margin: 0 auto;
-    box-sizing: border-box;
-  } */
-
-  /*   footer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 12px;
-  } */
-
-  /*  footer a {
-    font-weight: bold;
+  main.blurred {
+    filter: blur(2px);
+    pointer-events: all;
   }
 
-  @media (min-width: 480px) {
-    footer {
-      padding: 12px 0;
-    }
-  } */
+  div.blurred {
+    pointer-events: none;
+  }
 </style>
