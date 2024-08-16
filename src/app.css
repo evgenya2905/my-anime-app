@@ -1,4 +1,56 @@
 @import '@fontsource/fira-mono';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.heading_item_style {
+  @apply text-center m-0 text-lg text-black overflow-hidden text-ellipsis whitespace-nowrap w-56 inline-block;
+}
+
+.button_pagination {
+  @apply p-2 rounded-md border border-solid border-[#6177d8] bg-[#caccd6] hover:border-[#1136dc] hover:bg-[#a6b0de] duration-100 ease-in;
+}
+
+.button_pagination_active {
+  @apply font-bold border-[#1136dc] bg-[#a6b0de];
+}
+
+.list_top {
+  @apply flex flex-row justify-around;
+}
+
+.list_item {
+  @apply flex flex-row justify-around gap-10 flex-wrap p-5;
+}
+
+.loader {
+  @apply text-center m-48;
+}
+
+.list_genres {
+  @apply max-w-7xl flex flex-row flex-wrap gap-2.5;
+}
+
+.caption_for_genres {
+  @apply flex flex-row justify-center items-center gap-4 mb-2;
+}
+
+.button_for_genres {
+  @apply border-[0.05em] border-solid border-[#5f85a7] bg-[#c2d8ea] rounded-lg px-2 h-8 text-base hover:bg-[#a1c8e7];
+}
+
+.category_for_search {
+  @apply absolute border border-solid border-[#87c3df] top-10 px-2.5 pt-px pb-0.5 rounded-sm bg-[var(--background)] z-[1];
+}
+
+.active_category_for_search {
+  @apply bg-[#bbd7e4] ease-in duration-75;
+}
+
+.active_category {
+  background-color: #bbd7e4;
+  transition: 20ms ease-in;
+}
 
 :root {
   --font-body: Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,

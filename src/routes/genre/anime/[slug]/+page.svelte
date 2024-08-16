@@ -1,6 +1,5 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  /* console.log('🚀 ~ page:', $page.url.pathname); */
   import { onMount } from 'svelte';
   import { axiosGet } from '$lib/utils.ts/axiosInstance';
   import Item from '$lib/components/Item.svelte';
@@ -30,10 +29,7 @@
     const response = await axiosGet(`anime?genres=${slug}&page=${page}`);
     const data = response.data;
     items = data.data;
-    /*  console.log(data);
-    console.log(items); */
     totalPages = data.pagination.last_visible_page;
-    /* console.log(data.pagination); */
   };
 
   const loadPage = async (page: number) => {
@@ -54,13 +50,14 @@
 </svelte:head>
 
 {#if loading}
-  <div>
+  <div class="list_item">
     {#each Array(25) as _, i (i)}
       <SkeletonImg />
     {/each}
   </div>
+  <Pagination {currentPage} {totalPages} onPageChange={loadPage} />
 {:else}
-  <div>
+  <div class="list_item">
     {#each items as item, index (`${item.mal_id}-${index}`)}
       <Item
         id={item.mal_id}
@@ -74,14 +71,3 @@
   </div>
   <Pagination {currentPage} {totalPages} onPageChange={loadPage} />
 {/if}
-
-<style>
-  div {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    gap: 40px;
-    flex-wrap: wrap;
-    padding: 20px;
-  }
-</style>

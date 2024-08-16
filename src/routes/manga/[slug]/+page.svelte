@@ -3,7 +3,6 @@
   import { axiosGet } from '$lib/utils.ts/axiosInstance';
   import ItemDetail from '$lib/components/ItemDetail.svelte';
   import { page } from '$app/stores';
-  /* console.log('🚀 ~ page:', $page.params.slug); */
 
   import Loader from '$lib/components/Loader.svelte';
 
@@ -45,7 +44,6 @@
 
   const getManga = async () => {
     const data = await axiosGet(`manga/${$page.params.slug}`);
-    /* console.log('🚀 ~ getManga ~ data:', data); */
     item = data.data.data;
     console.log(item);
   };
@@ -57,7 +55,7 @@
 </script>
 
 {#if loading}
-  <div><Loader /></div>
+  <div class="loader"><Loader /></div>
 {:else}
   <ItemDetail
     title={item.title}
@@ -69,10 +67,3 @@
     synopsis={item.synopsis}
   />
 {/if}
-
-<style>
-  div {
-    text-align: center;
-    margin: 200px;
-  }
-</style>

@@ -39,7 +39,6 @@
     if (items.length === 0) {
       goto(`/search/notfound`);
     }
-    /* console.log(items); */
     totalPages = data.pagination.last_visible_page;
     console.log(currentName);
   };
@@ -62,13 +61,14 @@
 </svelte:head>
 
 {#if loading}
-  <div>
+  <div class="list_item">
     {#each Array(25) as _, i (i)}
       <SkeletonImg />
     {/each}
   </div>
+  <Pagination {currentPage} {totalPages} onPageChange={loadPage} />
 {:else}
-  <div>
+  <div class="list_item">
     {#each items as item, index (`${item.mal_id}-${index}`)}
       <Item
         id={item.mal_id}
@@ -81,14 +81,3 @@
   </div>
   <Pagination {currentPage} {totalPages} onPageChange={loadPage} />
 {/if}
-
-<style>
-  div {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    gap: 40px;
-    flex-wrap: wrap;
-    padding: 20px;
-  }
-</style>

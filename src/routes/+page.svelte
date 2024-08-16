@@ -21,17 +21,13 @@
   let items: Item[] = [];
   const getTopAnime = async () => {
     const data = await axiosGet('top/anime?page=1&limit=5');
-    /* console.log('🚀 ~ getTopAnime ~ data:', data); */
     items = data.data.data;
-    /*  console.log(items); */
   };
 
   let manga: Item[] = [];
   const getTopManga = async () => {
     const data = await axiosGet('top/manga?page=1&limit=5');
-    /* console.log('🚀 ~ getTopManga ~ data:', data); */
     manga = data.data.data;
-    /*  console.log(manga); */
   };
 
   onMount(async () => {
@@ -45,15 +41,15 @@
   <meta name="description" content="Svelte demo app" />
 </svelte:head>
 
-<h1>Top Anime</h1>
+<h1 class="mt-4 mb-2">Top Anime</h1>
 {#if loading}
-  <div class="top_anime">
+  <div class="list_top">
     {#each Array(5) as _, i (i)}
       <SkeletonImg />
     {/each}
   </div>
 {:else}
-  <div class="top_anime">
+  <div class="list_top">
     {#each items as item (item.mal_id)}
       <section>
         <Item
@@ -69,15 +65,15 @@
   </div>
 {/if}
 
-<h1>Top Manga</h1>
+<h1 class="mt-4 mb-2">Top Manga</h1>
 {#if loading}
-  <div class="top_manga">
+  <div class="list_top mb-12">
     {#each Array(5) as _, i (i)}
       <SkeletonImg />
     {/each}
   </div>
 {:else}
-  <div class="top_manga">
+  <div class="list_top mb-12">
     {#each manga as mang (mang.mal_id)}
       <section>
         <Item
@@ -92,23 +88,3 @@
     {/each}
   </div>
 {/if}
-
-<style>
-  body {
-  }
-
-  .top_manga,
-  .top_anime {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-  }
-
-  h2 {
-    font-size: 50px;
-  }
-
-  .top_manga {
-    margin-bottom: 50px;
-  }
-</style>

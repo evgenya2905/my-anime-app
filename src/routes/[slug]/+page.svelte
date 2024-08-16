@@ -1,9 +1,7 @@
-<script lang="ts">
+<!-- <script lang="ts">
   import { onMount } from 'svelte';
   import { axiosGet } from '$lib/utils.ts/axiosInstance';
-  /* import ItemDetail from '$lib/components/ItemDetail.svelte'; */
   import { page } from '$app/stores';
-  /*  console.log('🚀 ~ page:', $page.params.slug); */
 
   let itemAnime: { [key: string]: any } = {
     title: 'Loading...',
@@ -38,7 +36,6 @@
 
   const getManga = async () => {
     const data = await axiosGet(`manga/${$page.params.slug}`);
-    /*  console.log('🚀 ~ getAnime ~ data:', data); */
     itemManga = data.data.data;
     console.log(itemManga);
   };
@@ -47,7 +44,7 @@
     getAnime();
     getManga();
   });
-</script>
+</script> -->
 
 <!-- <ItemDetail
   title={itemAnime.title}

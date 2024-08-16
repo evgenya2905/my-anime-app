@@ -16,23 +16,12 @@
   }
 </script>
 
-<div class="app">
+<div>
   <Header bind:showSearch={isSearchOpen} />
 
-  <main on:click={handleMainClick} class={isSearchOpen ? 'blurred' : ''}>
-    <div class={isSearchOpen ? 'blurred' : ''}>
+  <main on:click={handleMainClick} class={isSearchOpen ? 'blur-sm' : ''}>
+    <div class={isSearchOpen ? 'pointer-events-none' : ''}>
       <slot />
     </div>
   </main>
 </div>
-
-<style>
-  main.blurred {
-    filter: blur(2px);
-    pointer-events: all;
-  }
-
-  div.blurred {
-    pointer-events: none;
-  }
-</style>
