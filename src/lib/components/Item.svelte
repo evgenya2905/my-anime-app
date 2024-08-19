@@ -1,14 +1,12 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  /* import { page } from '$app/stores'; */
-  //made types for props
-  //export let b: string;
+
   export let title: string;
   export let titleJapanese: string;
-  /* export let genres: any[]; */
   export let score: number | null = null;
   export let image: string;
   export let id: number;
+
   let imageLoaded: boolean = false;
   let link: string[] = window.location.href.split('/');
   export let path: string = link[link.length - 1];
@@ -22,12 +20,6 @@
       handleClick();
     }
   }
-
-  /* const handleGenreClick = (genreId: number, event: Event) => {
-    event.stopPropagation();
-    goto(`genre/${path}/${genreId}`);
-    console.log(genreId);
-  }; */
 </script>
 
 <div
@@ -35,93 +27,20 @@
   tabindex="0"
   on:click={handleClick}
   on:keydown={handleKeydown}
-  class="main"
+  class="flex flex-col items-center gap-4 p-2.5 border-[0.05em] border-solid border-[#bdbddb] bg-[#e8e8f5] rounded-xl w-[16em] h-[30em] hover:bg-[#cdcdf2] hover:cursor-pointer duration-300 ease-in"
 >
   <img
     src={image}
     alt={title}
-    class:loaded={imageLoaded}
     on:load={() => (imageLoaded = true)}
+    class={`object-cover max-h-80 min-h-80  max-w-56 transition-opacity duration-1000 ease-in ${
+      imageLoaded ? 'opacity-100' : 'opacity-0'
+    }`}
   />
-  <h2>{title}</h2>
-  <h2>{titleJapanese}</h2>
+  <h2 class="heading_item_style">{title}</h2>
+  <h2 class="heading_item_style">{titleJapanese}</h2>
 
   {#if score !== null}
-    <p>{score}</p>
+    <p class="mt-2.5">{score}</p>
   {/if}
 </div>
-
-<style>
-  .main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    padding: 10px;
-    border: 0.05em solid rgb(189, 189, 219);
-    background-color: rgb(232, 232, 245);
-    border-radius: 10px;
-    width: 14em;
-    height: 28em;
-  }
-
-  .main:hover {
-    cursor: pointer;
-    background-color: rgb(205, 205, 242);
-    transition: 0.1s ease-in;
-  }
-
-  /*  .genres_list {
-    display: flex;
-    gap: 5px;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-    align-items: center;
-    overflow: auto;
-  } */
-
-  /*  a {
-  } */
-
-  img {
-    /* min-width: 210px; */
-    object-fit: cover;
-    min-height: 310px;
-    max-width: 225px;
-    max-height: 310px;
-  }
-
-  img.loaded {
-    opacity: 1;
-  }
-
-  h2 {
-    /* max-width: 20px; */
-    text-align: center;
-    margin: 0;
-    font-size: large;
-    text-decoration: none;
-    color: black;
-    overflow: hidden;
-    white-space: nowrap;
-    width: 225px;
-    display: inline-block;
-    text-overflow: ellipsis;
-    height: 1.5em;
-  }
-
-  p {
-    line-height: 0;
-    margin-top: 20px;
-  }
-
-  /* .genre {
-    font-size: 0.8em;
-    color: black;
-    padding: 5px;
-    border: 0.05em solid rgb(96, 96, 164);
-    border-radius: 30px;
-    background-color: rgb(199, 199, 219);
-  } */
-</style>

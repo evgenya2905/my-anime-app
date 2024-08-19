@@ -1,41 +1,14 @@
-<div class="skeleton">
-  <div class="skeleton-image"></div>
-  <div class="skeleton-text" style="width: 70%;"></div>
-  <div class="skeleton-text" style="width: 50%;"></div>
-  <div class="skeleton-text" style="width: 90%;"></div>
+<div class="bg-[#e0e0e0] rounded-[5px] overflow-hidden w-[16em] h-[30em]">
+  <div
+    class="w-full h-full pt-[56.25%] bg-gradient-to-r from-[#e0e0e0] via-[#f0f0f0] to-[#e0e0e0] bg-[length:200%_100%] animate-shimmer"
+  ></div>
+  <div
+    class="h-[1em] w-[70%] mx-auto my-[0.5em] bg-[#e0e0e0] rounded-[5px]"
+  ></div>
+  <div
+    class="h-[1em] w-[50%] mx-auto my-[0.5em] bg-[#e0e0e0] rounded-[5px]"
+  ></div>
+  <div
+    class="h-[1em] w-[90%] mx-auto my-[0.5em] bg-[#e0e0e0] rounded-[5px]"
+  ></div>
 </div>
-
-<!-- Skeleton.svelte -->
-<style>
-  .skeleton {
-    background-color: #e0e0e0;
-    border-radius: 5px;
-    overflow: hidden;
-    width: 14em; /* Той же розмір, що й у компонента Item */
-    height: 30em;
-  }
-  .skeleton-image {
-    width: 100%;
-    height: 100%;
-    padding-top: 56.25%; /* 16:9 Aspect Ratio */
-    background: linear-gradient(-90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
-  }
-
-  @keyframes shimmer {
-    0% {
-      background-position: 200% 0;
-    }
-    100% {
-      background-position: -200% 0;
-    }
-  }
-
-  .skeleton-text {
-    height: 1em;
-    margin: 0.5em 0;
-    background: #e0e0e0;
-    border-radius: 5px;
-  }
-</style>

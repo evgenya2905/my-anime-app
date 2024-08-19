@@ -49,10 +49,13 @@
 
 <header>
   <nav>
-    <svg viewBox="0 0 2 3" aria-hidden="true">
-      <path d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
+    <svg class="w-8 h-12 block" viewBox="0 0 2 3" aria-hidden="true">
+      <path
+        class="fill-[var(--background)]"
+        d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z"
+      />
     </svg>
-    <ul>
+    <ul class="bg-[var(--background)] relative flex">
       <li class={$page.url.pathname === '/' ? 'active' : ''}>
         <a href="/">Home</a>
       </li>
@@ -69,7 +72,7 @@
 
     {#if showSearch}
       <div
-        class="block_icon_search"
+        class="bg-[var(--background)] pr-1.5 pl-2.5"
         role="button"
         tabindex="0"
         on:click={toggleShowSearch}
@@ -81,7 +84,7 @@
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="size-6"
+          class="w-5 h-12 block"
         >
           <path
             stroke-linecap="round"
@@ -91,23 +94,29 @@
         </svg>
       </div>
 
-      <div class="search">
+      <div class="bg-[var(--background)] flex gap-1 items-center">
         <input
+          class="rounded-sm border border-solid border-[#87c3df] p-0.5 placeholder:pl-1"
           type="text"
           on:input={handleChangeTitle}
           on:keydown={handleRedirectOrClose}
           placeholder="Search..."
           autofocus
         />
-        <button on:click={gotoTitles}>Go!</button>
+        <button
+          class="py-px px-1.5 bg-[#bbd7e4] border-2 border-solid border-[#88c5e1] rounded hover:bg-[#97cce5] hover:border-[#6ebfe4] ease-in duration-100"
+          on:click={gotoTitles}>Go!</button
+        >
       </div>
-      <div class="categories">
+      <div class="relative">
         <div
           role="button"
           tabindex="0"
           on:click={() => changeCategory('anime')}
           on:keydown={(e) => e.key === 'Enter' && changeCategory('anime')}
-          class="category anime {category === 'anime' ? 'active_category' : ''}"
+          class="category_for_search right-40 {category === 'anime'
+            ? 'active_category_for_search'
+            : ''}"
         >
           anime
         </div>
@@ -116,14 +125,16 @@
           tabindex="0"
           on:click={() => changeCategory('manga')}
           on:keydown={(e) => e.key === 'Enter' && changeCategory('manga')}
-          class="category manga {category === 'manga' ? 'active_category' : ''}"
+          class="category_for_search right-16 {category === 'manga'
+            ? 'active_category_for_search'
+            : ''}"
         >
           manga
         </div>
       </div>
     {:else}
       <div
-        class="block_icon_search"
+        class="bg-[var(--background)] pr-1.5 pl-2.5"
         role="button"
         tabindex="0"
         on:click={toggleShowSearch}
@@ -135,7 +146,7 @@
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="size-6"
+          class="w-5 h-12 block"
         >
           <path
             stroke-linecap="round"
@@ -145,18 +156,16 @@
         </svg>
       </div>
     {/if}
-    <svg viewBox="0 0 2 3" aria-hidden="true">
-      <path d="M0,0 L0,3 C0.5,3 0.5,3 1,2 L2,0 Z" />
+    <svg class="w-8 h-12 block" viewBox="0 0 2 3" aria-hidden="true">
+      <path
+        class="fill-[var(--background)]"
+        d="M0,0 L0,3 C0.5,3 0.5,3 1,2 L2,0 Z"
+      />
     </svg>
   </nav>
 </header>
 
-<style>
-  header {
-    display: flex;
-    justify-content: center;
-  }
-
+<style lang="postcss">
   .active a {
     color: red;
   }
@@ -165,34 +174,6 @@
     display: flex;
     justify-content: center;
     --background: rgba(255, 255, 255, 0.7);
-  }
-
-  svg {
-    width: 2em;
-    height: 3em;
-    display: block;
-  }
-
-  path {
-    fill: var(--background);
-  }
-
-  ul {
-    position: relative;
-    padding: 0;
-    margin: 0;
-    height: 3em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    list-style: none;
-    background: var(--background);
-    background-size: contain;
-  }
-
-  li {
-    position: relative;
-    height: 100%;
   }
 
   nav a {
@@ -211,80 +192,5 @@
 
   a:hover {
     color: var(--color-theme-1);
-  }
-
-  .block_icon_search {
-    background: var(--background);
-    padding: 0 5px 0 10px;
-  }
-
-  .block_icon_search:hover {
-    cursor: pointer;
-  }
-
-  .size-6 {
-    width: 20px;
-  }
-  .search {
-    background: var(--background);
-    display: flex;
-    gap: 2px;
-    align-items: center;
-  }
-
-  input {
-    border-radius: 2px;
-    border: 1px solid rgb(135, 195, 223);
-    padding: 2px;
-  }
-
-  input::placeholder {
-    padding-left: 5px;
-  }
-
-  button {
-    padding: 1px 5px 1px 5px;
-    background-color: rgb(187, 215, 228);
-    border: 2px solid rgb(136, 197, 225);
-    border-radius: 3px;
-  }
-
-  button:hover {
-    cursor: pointer;
-    background-color: rgb(151, 204, 229);
-    border: 2px solid rgb(110, 191, 228);
-    transition: 0.1s ease-in;
-  }
-
-  .categories {
-    position: relative;
-  }
-  .category {
-    position: absolute;
-    border: 1px solid rgb(135, 195, 223);
-    top: 2.5em;
-    /* cursor: pointer; */
-
-    padding: 1px 10px 2px 10px;
-    border-radius: 2px;
-    background: var(--background);
-    z-index: 1;
-  }
-
-  .category:hover {
-    cursor: pointer;
-  }
-
-  .anime {
-    right: 9.5em;
-  }
-
-  .manga {
-    right: 4em;
-  }
-
-  .active_category {
-    background-color: rgb(187, 215, 228);
-    transition: 20ms ease-in;
   }
 </style>
