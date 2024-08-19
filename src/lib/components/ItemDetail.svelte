@@ -1,14 +1,17 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import { goto } from '$app/navigation';
+  import type { IAuthors, IGenreWithType } from '$lib/types/types';
 
   export let title: string;
   export let titleJapanese: string;
-  export let genres: any[] = [];
+
+  export let genres: IGenreWithType[] = [];
   export let score: number | null = null;
   export let image: string;
   export let synopsis: string | null = null;
-  export let authors: any[] | undefined;
+
+  export let authors: IAuthors[] | undefined;
 
   let nameList: string = 'Authors';
   if (authors !== undefined && authors.length === 1) {

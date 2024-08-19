@@ -1,31 +1,57 @@
-type B = {
+export interface IGenre {
+  mal_id: number;
   name: string;
-  age: number;
-  rating: string | null;
-  cars?: Car;
-};
-
-type Car = {
-  model: string;
-  year: number;
-};
-
-interface ICar {
-  model: string;
-  year: number;
+  url: string;
 }
 
-let qqq: B = {
-  name: 'dsjjs',
-  age: 20,
-  rating: null,
-};
+export interface IGenreWithType extends IGenre {
+  type: string;
+}
 
-let array: ICar[] = [{ model: 'x5', year: 2000 }];
+export interface IGenreWithCount extends IGenre {
+  count: number;
+}
 
-type Arg = ArgsEnum.ON | ArgsEnum.OFF;
+export interface IAuthors {
+  mal_id: number;
+  name: string;
+  type: string;
+  url: string;
+}
 
-enum ArgsEnum {
-  ON = 'on',
-  OFF = 'off',
+export interface IMediaItem {
+  mal_id: number;
+  images: {
+    jpg: {
+      image_url: string;
+    };
+  };
+  title: string;
+  title_japanese: string;
+  score: number | null;
+}
+
+interface IImages {
+  jpg: {
+    large_image_url: string;
+  };
+}
+
+export interface IMediaItemDetail {
+  title: string;
+  title_japanese: string;
+  genres: IGenreWithType[];
+  score: number | null;
+  images: IImages;
+  synopsis: string;
+}
+
+export interface IMediaItemDetailWithAuthors extends IMediaItemDetail {
+  title: string;
+  title_japanese: string;
+  authors: IAuthors[];
+  genres: IGenreWithType[];
+  score: number | null;
+  images: IImages;
+  synopsis: string;
 }

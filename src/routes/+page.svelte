@@ -3,28 +3,17 @@
   import { onMount } from 'svelte';
   import { axiosGet } from '$lib/utils.ts/axiosInstance';
   import SkeletonImg from '$lib/components/SkeletonImg.svelte';
+  import type { IMediaItem } from '$lib/types/types';
 
   let loading: boolean = true;
 
-  interface Item {
-    mal_id: number;
-    images: {
-      jpg: {
-        image_url: string;
-      };
-    };
-    title: string;
-    title_japanese: string;
-    score: number | null;
-  }
-
-  let items: Item[] = [];
+  let items: IMediaItem[] = [];
   const getTopAnime = async () => {
     const data = await axiosGet('top/anime?page=1&limit=5');
     items = data.data.data;
   };
 
-  let manga: Item[] = [];
+  let manga: IMediaItem[] = [];
   const getTopManga = async () => {
     const data = await axiosGet('top/manga?page=1&limit=5');
     manga = data.data.data;

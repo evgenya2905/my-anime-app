@@ -5,30 +5,11 @@
   import { page } from '$app/stores';
 
   import Loader from '$lib/components/Loader.svelte';
+  import type { IMediaItemDetailWithAuthors } from '$lib/types/types';
 
   let loading: boolean = true;
 
-  interface Images {
-    jpg: {
-      large_image_url: string;
-    };
-  }
-
-  interface Authors {
-    name: string;
-  }
-
-  interface Item {
-    title: string;
-    title_japanese: string;
-    authors: Authors[];
-    genres: string[];
-    score: number | null;
-    images: Images;
-    synopsis: string;
-  }
-
-  let item: Item = {
+  let item: IMediaItemDetailWithAuthors = {
     title: 'Loading...',
     title_japanese: 'Loading...',
     authors: [],
@@ -45,7 +26,6 @@
   const getManga = async () => {
     const data = await axiosGet(`manga/${$page.params.slug}`);
     item = data.data.data;
-    console.log(item);
   };
 
   onMount(async () => {

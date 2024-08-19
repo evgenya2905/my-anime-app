@@ -1,12 +1,7 @@
 <script lang="ts">
-  interface Genre {
-    mal_id: number;
-    name: string;
-    url: string;
-    count: number;
-  }
+  import type { IGenreWithCount } from '$lib/types/types';
 
-  export let genre: Genre;
+  export let genre: IGenreWithCount;
   export let path: string;
 </script>
 

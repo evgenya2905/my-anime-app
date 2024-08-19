@@ -6,11 +6,12 @@
   import { axiosGet } from '$lib/utils.ts/axiosInstance';
   import { sharedName } from '$lib/store';
   import { goto } from '$app/navigation';
+  import type { IMediaItem } from '$lib/types/types';
   let currentName: string;
   $: $sharedName, (currentName = $sharedName);
   $: {
     if (currentName) {
-      loadPage(1); // Завантажити першу сторінку при зміні пошукового запиту
+      loadPage(1);
     }
   }
 
@@ -18,19 +19,7 @@
   let currentPage: number = 1;
   let totalPages: number = 1;
 
-  interface Item {
-    mal_id: number;
-    images: {
-      jpg: {
-        image_url: string;
-      };
-    };
-    title: string;
-    title_japanese: string;
-    score: number | null;
-  }
-
-  let items: Item[] = [];
+  let items: IMediaItem[] = [];
   const getManga = async (page: number) => {
     const response = await axiosGet(`manga?page=${page}&q=${currentName}`);
     const data = response.data;
@@ -39,7 +28,6 @@
       goto(`/search/notfound`);
     }
     totalPages = data.pagination.last_visible_page;
-    console.log(currentName);
   };
 
   const loadPage = async (page: number) => {

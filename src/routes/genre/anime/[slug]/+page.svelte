@@ -5,6 +5,7 @@
   import Item from '$lib/components/Item.svelte';
   import SkeletonImg from '$lib/components/SkeletonImg.svelte';
   import Pagination from '$lib/components/Pagination.svelte';
+  import type { IMediaItem } from '$lib/types/types';
 
   let slug: string = $page.params.slug;
 
@@ -12,19 +13,7 @@
   let currentPage: number = 1;
   let totalPages: number = 1;
 
-  interface Item {
-    mal_id: number;
-    images: {
-      jpg: {
-        image_url: string;
-      };
-    };
-    title: string;
-    title_japanese: string;
-    score: number | null;
-  }
-
-  let items: Item[] = [];
+  let items: IMediaItem[] = [];
   const getAnime = async (page: number) => {
     const response = await axiosGet(`anime?genres=${slug}&page=${page}`);
     const data = response.data;

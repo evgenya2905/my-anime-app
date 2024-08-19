@@ -5,6 +5,7 @@
   import { onMount } from 'svelte';
   import { axiosGet } from '$lib/utils.ts/axiosInstance';
   import { sharedName } from '$lib/store';
+  import type { IMediaItem } from '$lib/types/types';
   let currentName: string;
   $: $sharedName, (currentName = $sharedName);
 
@@ -12,25 +13,12 @@
   let currentPage: number = 1;
   let totalPages: number = 1;
 
-  interface Item {
-    mal_id: number;
-    images: {
-      jpg: {
-        image_url: string;
-      };
-    };
-    title: string;
-    title_japanese: string;
-    score: number | null;
-  }
-
-  let items: Item[] = [];
+  let items: IMediaItem[] = [];
   const getAnime = async (page: number) => {
     const response = await axiosGet(`top/anime?page=${page}`);
     const data = response.data;
     items = data.data;
     totalPages = data.pagination.last_visible_page;
-    console.log(currentName);
   };
 
   const loadPage = async (page: number) => {

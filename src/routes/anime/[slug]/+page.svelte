@@ -4,25 +4,11 @@
   import ItemDetail from '$lib/components/ItemDetail.svelte';
   import { page } from '$app/stores';
   import Loader from '$lib/components/Loader.svelte';
+  import type { IMediaItemDetail } from '$lib/types/types';
 
   let loading: boolean = true;
 
-  interface Images {
-    jpg: {
-      large_image_url: string;
-    };
-  }
-
-  interface Item {
-    title: string;
-    title_japanese: string;
-    genres: string[];
-    score: number | null;
-    images: Images;
-    synopsis: string;
-  }
-
-  let item: Item = {
+  let item: IMediaItemDetail = {
     title: 'Loading...',
     title_japanese: 'Loading...',
     genres: [],
@@ -38,7 +24,6 @@
   const getAnime = async () => {
     const data = await axiosGet(`anime/${$page.params.slug}`);
     item = data.data.data;
-    console.log(item);
   };
 
   onMount(async () => {

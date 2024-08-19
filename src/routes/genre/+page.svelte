@@ -2,9 +2,9 @@
   import Genre from '$lib/components/Genre.svelte';
   import { onMount } from 'svelte';
   import { axiosGet } from '$lib/utils.ts/axiosInstance';
-  import { page } from '$app/stores';
   import { fly } from 'svelte/transition';
   import Loader from '$lib/components/Loader.svelte';
+  import type { IGenreWithCount } from '$lib/types/types';
   let loading: boolean = true;
 
   let showBlock: boolean = true;
@@ -13,20 +13,13 @@
     showBlock = !showBlock;
   }
 
-  interface Genre {
-    mal_id: number;
-    name: string;
-    url: string;
-    count: number;
-  }
-
-  let genresAnime: Genre[] = [];
+  let genresAnime: IGenreWithCount[] = [];
   const getAnimeGenre = async () => {
     const data = await axiosGet('genres/anime');
     genresAnime = data.data.data;
   };
 
-  let genresManga: Genre[] = [];
+  let genresManga: IGenreWithCount[] = [];
   const getMangaGenre = async () => {
     const data = await axiosGet('genres/manga');
     genresManga = data.data.data;
